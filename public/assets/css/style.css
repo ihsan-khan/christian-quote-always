@@ -1393,22 +1393,22 @@ blockquote.blockquote .author {
 }
 @media only screen and (min-width: 1200px) and (max-width: 1499px) {
   .hero-item.hero-item-2 {
-    height: 350px;
+    height: 450px;
   }
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .hero-item.hero-item-2 {
-    height: 350px;
+    height: 400px;
   }
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .hero-item.hero-item-2 {
-    height: 250px;
+    height: 350px;
   }
 }
 @media only screen and (max-width: 767px) {
   .hero-item.hero-item-2 {
-    height: 150px;
+    height: 200px;
     padding: 0;
   }
 }

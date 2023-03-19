@@ -5,15 +5,18 @@
         "build": "vite build"
     },
     "devDependencies": {
-        "axios": "^1.1.2",
+        "axios": "^1.3.4",
         "laravel-vite-plugin": "^0.7.2",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@smartweb/vue-flash-message": "^0.6.10",
         "@vitejs/plugin-vue": "^4.0.0",
+        "jsonwebtoken": "^8.5.1",
         "vue": "^3.2.36",
-        "vue-router": "^4.1.6"
+        "vue-router": "^4.1.6",
+        "vuex": "^4.1.0"
     }
 }

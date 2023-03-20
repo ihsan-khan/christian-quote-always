@@ -5,7 +5,7 @@ import * as auth from './services/auth_service';
 
 export default new createStore({
     state: {
-        isLoggedIn: 'ha',
+        isLoggedIn: null,
         // apiURL: 'https://christianquotealways.com/api',
         // serverPath: 'https://christianquotealways.com',
         apiURL: 'http://localhost:8000/api',

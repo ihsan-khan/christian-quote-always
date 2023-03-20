@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('quotes', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id');
+            $table->string('author')->nullable();
+            $table->text('content')->nullable();
+            $table->string('image')->nullable();
+            $table->string('quote_type');
+            $table->string('permission');
             $table->timestamps();
         });
     }

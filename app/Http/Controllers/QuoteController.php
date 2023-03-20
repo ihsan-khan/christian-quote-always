@@ -9,7 +9,6 @@ class QuoteController extends Controller
 {
     public function store(Request $request)
     {
-        dd($request->all());
         if($request->has('upload_quote')){
             $request->validate([
                 'quote_image' => 'required',

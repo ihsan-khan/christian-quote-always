@@ -55,6 +55,12 @@ const routes = [
             }
         }
     },
+    {
+        path: '/home',
+        component: () => import ('./views/user/Home.vue'),
+        component: index
+       
+    },
 ];
 
 const router = createRouter({

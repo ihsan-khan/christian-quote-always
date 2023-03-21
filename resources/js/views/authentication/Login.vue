@@ -16,26 +16,40 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user">
+                                    <form v-on:submit.prevent="onSubmit" class="user">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
+                                            <input
+                                                type="email"
+                                                v-model="user.email"
+                                                class="form-control form-control-user"
+                                                placeholder="Enter Email Address..."
+                                            />
+                                            <div class="invalid-feedback" v-if="errors.email">{{errors.email[0]}}</div>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                            <input
+                                                type="password"
+                                                v-model="user.password"
+                                                class="form-control form-control-user"
+                                                placeholder="Password" />
+                                            <div class="invalid-feedback" v-if="errors.password">{{errors.password[0]}}</div>
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
+                                               <input
+                                                    type="checkbox"
+                                                    v-model="user.rememberMe"
+                                                    class="custom-control-input"
+                                                    id="rememberMe" />
+                                                <label class="custom-control-label pt-1" for="rememberMe">Remember Me</label>
                                             </div>
                                         </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
+                                        <button 
+                                            type="submit" 
+                                            ref="btnSubmit" 
+                                            class="btn btn-primary btn-user btn-block">
                                             Login
-                                        </a>
+                                        </button>
                                         <hr>
                                         <a href="index.html" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
@@ -67,13 +81,10 @@
 
 <script>
     import * as auth from "../../services/auth_service";
-    import Header from '../../components/Header.vue';
-    import Footer from '../../components/Footer.vue';
     export default {
         name: "Login",
         components: {
-            Header,
-            Footer
+           
         },
         data() {
             return {
@@ -104,12 +115,14 @@
                 this.disableSubmission(this.$refs.btnSubmit);
                 try {
                     const response = await auth.login(this.user);
+                    console.log('response',response);
                     if (response.data.user.role === 'user') {
                         this.$router.push('/home');
                     } else if (response.data.user.role === 'admin') {
                         this.$router.push('/admin');
                     }
                 } catch (error) {
+                    console.log('error',error);
                     switch (error.response.status) {
                         case 422:
                             this.errors = error.response.data.errors;

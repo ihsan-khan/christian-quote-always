@@ -1,7 +1,6 @@
 import store from '../store';
 import { http, httpFile } from './http_service';
-// import jwt from 'jsonwebtoken';
-var jwt = 'jsonwebtoken';
+const jwt = require("jsonwebtoken");
 
 export function register(user) {
     return http().post('/auth/register', user);

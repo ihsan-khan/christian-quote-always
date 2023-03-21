@@ -14,7 +14,7 @@
     "dependencies": {
         "@smartweb/vue-flash-message": "^0.6.10",
         "@vitejs/plugin-vue": "^4.0.0",
-        "jsonwebtoken": "^8.5.1",
+        "jsonwebtoken": "^9.0.0",
         "vue": "^3.2.36",
         "vue-router": "^4.1.6",
         "vuex": "^4.1.0"

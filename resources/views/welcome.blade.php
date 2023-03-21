@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>LaravelVue</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="{{asset('assets/icon/font-awesome/css/all.min.css')}}">

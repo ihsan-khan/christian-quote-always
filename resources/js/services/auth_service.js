@@ -1,6 +1,7 @@
 import store from '../store';
 import { http, httpFile } from './http_service';
-const jwt = require("jsonwebtoken");
+import cryptoJs from 'crypto-js'; 
+// const jwt = require("jsonwebtoken");
 
 export function register(user) {
     return http().post('/auth/register', user);
@@ -20,33 +21,23 @@ export function login(user) {
     return http().post('/auth/login', user)
     .then(res => {
         if (res.status === 200) {
-            setToken(res.data);
+            setToken(res.data)
         }
+
         return res;
     });
 }
 
 function setToken(data) {
-    const token = generateJWT(data);
-    localStorage.setItem('cq-devby-softgear2019', token);
+    var token = cryptoJs.AES.encrypt(JSON.stringify(data),'token-cq-2020').toString();
+
+    localStorage.setItem('token-cq-2020', token);
     store.dispatch('authenticate', data.user);
 }
 
-function generateJWT(data) {
-    return jwt.sign({user: data}, 'cq27f4fc3d7755961ce9com4ab143c86d324bf294178combysoftgear2020');
-}
-
 export function isLoggedIn() {
-    const token = localStorage.getItem('cq-devby-softgear2019');
+    const token = localStorage.getItem('token-cq-2020');
     return token != null;
-}
-
-function decodeToken() {
-    const token = getToken();
-    if (!token) {
-        return null;
-    }
-    return jwt.decode(token);
 }
 
 export function getUserProfile() {
@@ -77,7 +68,7 @@ export function isVerified() {
 }
 
 function getToken() {
-    return localStorage.getItem('cq-devby-softgear2019');
+    return localStorage.getItem('token-cq-2020');
 }
 
 export function getProfile() {
@@ -94,7 +85,7 @@ export function getAccessToken() {
 
 export function logout() {
     http().get('/auth/logout');
-    localStorage.removeItem('cq-devby-softgear2019');
+    localStorage.removeItem('token-cq-2020');
     store.dispatch('authenticate');
 }
 
@@ -121,3 +112,4 @@ export function resendCode() {
 export function checkVerificationCode(verificationCode) {
     return http().post('/auth/check-verification-code', verificationCode);
 }
+

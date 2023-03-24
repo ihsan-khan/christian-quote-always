@@ -67,44 +67,31 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
-            'remember_me' => 'boolean'
         ]);
 
         if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             return response()->json([
-                'message' => 'Invalid username/password',
-                'status_code' => 401
+                'message' => 'Invalid username/password'
             ], 401);
         }
 
         $user = $request->user();
 
-        if ($user->role == 'admin') {
-            $tokenData = $user->createToken('Personal Access Token', ['administrator']);
+        $user->tokens()->delete();
+
+        if ($user->role == 'superadmin') {
+            $token = $user->createToken('Personal Access Token', ['superadmin']);
+        } if ($user->role == 'admin') {
+            $token = $user->createToken('Personal Access Token', ['admin']);
         } else {
-            $tokenData = $user->createToken('Personal Access Token', ['user']);
+            $token = $user->createToken('Personal Access Token', ['user']);
         }
 
-        $token = $tokenData->token;
-
-        if ($request->remember_me) {
-            $token->expires_at = Carbon::now()->addWeeks(1);
-        }
-
-        if ($token->save()) {
-            return response()->json([
-                'user' => $user,
-                'access_token' => $tokenData->accessToken,
-                'token_type' => 'Bearer',
-                'token_scope' => $tokenData->token->scopes[0],
-                'expires_at' => Carbon::parse($tokenData->token->expires_at)->toDateTimeString(),
-                'status_code' => 200
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Some error occurred, Please try again',
-                'status_code' => 500
-            ], 500);
-        }
+        return response()->json([
+            'user' => $user,
+            'access_token' => $token->plainTextToken,
+            'token_type' => 'Bearer',
+            'role' => $token->accessToken->abilities
+        ], 200);
     }
 }
